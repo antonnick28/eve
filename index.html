@@ -103,8 +103,17 @@
         }
     </style>
     <link rel="stylesheet" href="assets/gift.css">
+    <link rel="stylesheet" href="assets/catalog.css">
+    <meta name="description" content="Un jardín de flores y poesía para Eve. Descubre poemarios en español y guarda tus versos favoritos.">
+    <meta property="og:title" content="Para Eve · Un jardín de versos">
+    <meta property="og:description" content="Flores amarillas, poesía y un rincón bonito para volver.">
+    <meta property="og:type" content="website">
 </head>
 <body class="min-h-screen relative selection:bg-yellow-400 selection:text-black">
+
+
+    <div class="site-bar"><a class="site-brand" href="#inicio"><span aria-hidden="true">✿</span><span>Para Eve<small>UN JARDÍN DE VERSOS</small></span></a><nav class="site-nav" aria-label="Navegación principal"><a href="#inicio" data-route="inicio"><span aria-hidden="true">⌂</span>Inicio</a><a href="#biblioteca" data-route="biblioteca"><span aria-hidden="true">▤</span>Biblioteca</a><a href="#favoritos" data-route="favoritos"><span aria-hidden="true">♡</span>Favoritos <b id="favorite-count">0</b></a><a href="#musica" data-route="musica"><span aria-hidden="true">♪</span>Música</a></nav><button id="share-gift" class="share-gift" aria-label="Compartir este jardín">Compartir ↗</button></div>
+    <div id="catalog-toast" class="catalog-toast" role="status" aria-live="polite"></div><input id="share-url" class="share-url" aria-label="Enlace para compartir" readonly hidden>
 
     <!-- Interactive Canvas for Floating Yellow Petals & Light Dust -->
     <canvas id="canvas-container"></canvas>
@@ -130,6 +139,7 @@
         </div>
     </div>
 
+    <main id="gift-home">
     <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative pt-12 pb-12">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400/10 border border-yellow-400/30 mb-6 animate-pulse-slow">
             <i data-lucide="flower" class="w-4 h-4 text-yellow-400"></i>
@@ -354,21 +364,23 @@
     </section>
 
 
+    </main>
     <section id="musica" class="music-panel" aria-label="Música para leer">
         <div class="music-copy"><span class="eyebrow">La banda sonora de tu rincón</span><h2>Un poquito de calma ♪</h2><p id="music-status" role="status"></p>
         <label for="music-track" class="eyebrow">Melodía </label><select id="music-track"><option value="0">Luz de girasol</option><option value="1">Entre versos</option><option value="2">Un cielo para Eve</option></select></div>
         <button id="music-play" class="gift-button" aria-pressed="false">▶ Escuchar</button>
         <label for="music-volume">Volumen <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.35"></label>
     </section>
-    <section id="biblioteca" class="library" aria-labelledby="library-title">
-        <span class="eyebrow">Un regalo que no termina en esta página</span>
-        <h2 id="library-title">Mil formas de<br><em style="color:#e8c578">quedarte en un verso.</em></h2>
-        <p class="library-intro">Eve, este rinconcito es para tu alma de poeta. Descubre libros en español, guarda los que te abracen y vuelve a ellos cuando necesites un poco de belleza.</p>
-        <form id="book-form" class="library-tools" role="search"><label for="book-search" class="sr-only">Buscar por título o autor</label><input id="book-search" type="search" placeholder="Un autor, un título, un nuevo comienzo…"><button class="gift-button" type="submit">Buscar más</button><button id="favorites-toggle" class="gift-button" type="button" aria-pressed="false">Mis favoritos ♡</button></form>
-        <p id="library-status" class="library-status" role="status" aria-live="polite"></p>
-        <div id="book-grid" class="book-grid"></div>
-        <div class="library-footer"><span>Lecturas de <a href="https://www.gutenberg.org/" target="_blank" rel="noopener noreferrer">Project Gutenberg</a> y <a href="https://es.wikisource.org/" target="_blank" rel="noopener noreferrer">Wikisource</a>. Tus favoritos se guardan en este navegador.</span><button id="surprise-book" class="gift-button">Elige uno para mí ✧</button></div>
-    </section>
+    <main id="biblioteca" class="catalog-page" hidden>
+      <div class="catalog-heading"><div><span class="catalog-kicker">UNA BIBLIOTECA QUE FLORECE CONTIGO</span><h1>Entre flores <em>y versos.</em></h1><p>Un libro, un ratito para ti y todo un mundo por sentir.</p></div><button id="surprise-book" class="catalog-secondary">Sorpréndeme ✧</button></div>
+      <section id="catalog-feature" class="catalog-feature" aria-labelledby="feature-title"><div class="feature-copy"><span class="feature-label">LA LECTURA QUE TE ESPERA</span><h2 id="feature-title">Hay paisajes que<br>se llevan <em>dentro.</em></h2><p>En las orillas del Sar · Rosalía de Castro</p><p class="feature-note">Naturaleza, memoria y emoción. Abre sus páginas y deja que el mundo vaya un poquito más despacio.</p><a id="featured-read" class="catalog-primary" target="_blank" rel="noopener noreferrer">Empezar a leer ↗</a><span class="feature-caption">Texto completo · En español · Lectura gratuita</span></div><img src="assets/covers/70984.svg" alt="En las orillas del Sar, de Rosalía de Castro" width="400" height="560" class="featured-cover"></section>
+      <div id="continue-reading" class="continue-reading" hidden></div>
+      <section class="catalog-shelf" aria-labelledby="shelf-heading"><div class="shelf-title"><h2 id="shelf-heading">Explora la colección</h2><span id="catalog-count" role="status"></span></div>
+      <form id="book-form" class="catalog-search" role="search"><label class="search-box"><span aria-hidden="true">⌕</span><input id="book-search" type="search" aria-label="Buscar poemarios" placeholder="Busca un libro o un poeta…"></label><label class="filter-label"><span>Autor</span><select id="author-filter"><option value="">Todos los autores</option></select></label><label class="filter-label"><span>Ordenar</span><select id="book-sort"><option value="selection">Nuestra selección</option><option value="title">Título: A–Z</option><option value="author">Autor: A–Z</option></select></label></form>
+      <div class="collection-chips" aria-label="Colecciones de poesía"><button data-collection="Todo" aria-pressed="true">Todos los versos</button><button data-collection="Naturaleza" aria-pressed="false">Hojas y paisajes</button><button data-collection="Introspección" aria-pressed="false">Mirar hacia dentro</button><button data-collection="Modernismo" aria-pressed="false">Mundos de belleza</button><button data-collection="Antología" aria-pressed="false">Muchas voces</button></div>
+      <div id="catalog-grid" class="catalog-grid"></div><div id="catalog-empty" class="catalog-empty" hidden><span>♡</span><h3>Aquí caben nuevos versos</h3><p id="catalog-empty-message"></p><button id="reset-filters" class="catalog-secondary">Limpiar filtros</button><a href="#biblioteca">Explorar la biblioteca →</a></div>
+      </section><div class="catalog-colophon"><span>✧</span><p>Ocho poemarios. Infinitas formas de sentir.</p><small>Selección de poesía en español · Textos completos de <a href="https://www.gutenberg.org/" target="_blank" rel="noopener noreferrer">Project Gutenberg</a>.<br>Las portadas son ilustraciones creadas para este jardín. Cada lectura se abre en otra pestaña.</small></div>
+    </main>
 
     <!-- Botones Flotantes (reemplazan al menú superior) -->
     <div class="gift-controls fixed bottom-6 right-6 z-40 flex flex-col gap-3">
@@ -622,5 +634,6 @@
         });
     </script>
     <script src="assets/gift.js"></script>
+    <script src="assets/catalog.js"></script>
 </body>
 </html>
