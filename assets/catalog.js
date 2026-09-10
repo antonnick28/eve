@@ -50,7 +50,7 @@ function route(){
  document.querySelectorAll('[data-route]').forEach(a=>{const selected=a.dataset.route===(catalog?activeShelf:name==='musica'?'musica':'inicio');if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  $('catalog-feature').hidden=activeShelf==='favoritos';$('continue-reading').hidden=activeShelf==='favoritos'||!lastBook;
  renderCatalog();document.title=catalog?`${activeShelf==='favoritos'?'Mis favoritos':'Biblioteca de poesía'} · Para Eve`:'Para Eve · Un jardín de versos';
- if(catalog||name==='musica'){const modal=$('envelope-modal');modal.hidden=true;modal.style.display='none';}
+ document.body.classList.toggle('home-mode',!catalog&&name!=='musica');
  if(['inicio','biblioteca','favoritos','musica'].includes(name))window.scrollTo({top:0,behavior:'instant'});
 }
 window.addEventListener('hashchange',route);
@@ -62,7 +62,7 @@ $('reset-filters').onclick=()=>{$('book-search').value='';$('author-filter').val
 $('surprise-book').onclick=()=>{const list=filteredBooks();if(!list.length)return;const book=list[Math.floor(Math.random()*list.length)];rememberBook(book);window.open(book.url,'_blank','noopener,noreferrer');};
 const featured=poetryCatalog[0];$('featured-read').href=featured.url;$('featured-read').onclick=()=>rememberBook(featured);
 async function shareGift(){
- const url=new URL(location.href);url.hash='biblioteca';
+ const url=new URL(location.href);url.hash='inicio';
  const local=['localhost','127.0.0.1',''].includes(url.hostname)||url.hostname.endsWith('.test');
  if(local){toast('Esta es una vista local. Para compartirla con Eve, primero hay que publicar la página en internet.');return;}
  try{if(navigator.share){await navigator.share({title:'Para Eve · Un jardín de versos',text:'Un rincón de flores y poesía para ti 🌻',url:url.href});}else if(navigator.clipboard){await navigator.clipboard.writeText(url.href);toast('Enlace copiado. Ya puedes compartir este jardín.');}else{$('share-url').hidden=false;$('share-url').value=url.href;$('share-url').select();toast('Copia este enlace para compartirlo.');}}catch(e){if(e.name!=='AbortError')toast('No se pudo compartir. Copia la dirección desde tu navegador.');}
