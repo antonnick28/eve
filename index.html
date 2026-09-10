@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <script src="assets/lucide.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -101,6 +101,7 @@
             background: #facc15;
         }
     </style>
+    <link rel="stylesheet" href="assets/gift.css">
 </head>
 <body class="min-h-screen relative selection:bg-yellow-400 selection:text-black">
 
@@ -142,6 +143,7 @@
             "Hay miradas que sanan, palabras que crean poesía... y personas tan especiales como tú, que logran alegrarme la vida con solo sonreír."
         </p>
 
+        <img src="assets/garden.svg" class="garden-art" alt="Un ramo de cinco girasoles dorados, dedicado a Eve" width="1200" height="650">
         <!-- Interactive Sunflower Button -->
         <div class="relative group cursor-pointer my-2" onclick="createFlowerBurst(event)">
             <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-yellow-500 via-amber-400 to-yellow-200 p-1 animate-glow-gold flex items-center justify-center shadow-2xl transition-transform duration-500 group-hover:scale-105">
@@ -155,6 +157,7 @@
             </div>
         </div>
 
+        <nav class="gift-nav" aria-label="Explora tu regalo"><a href="#poema">Tu poema</a><a href="#biblioteca">Tu biblioteca</a><a href="#musica">Música para leer</a></nav>
         <div class="mt-20 animate-bounce">
             <a href="#poema" class="text-amber-400/70 hover:text-amber-300 transition-colors flex flex-col items-center gap-1 text-xs tracking-widest uppercase">
                 <span>Desliza para leer tu poema</span>
@@ -349,6 +352,23 @@
         </div>
     </section>
 
+
+    <section id="musica" class="music-panel" aria-label="Música para leer">
+        <div class="music-copy"><span class="eyebrow">La banda sonora de tu rincón</span><h2>Un poquito de calma ♪</h2><p id="music-status" role="status"></p>
+        <label for="music-track" class="eyebrow">Melodía </label><select id="music-track"><option value="0">Luz de girasol</option><option value="1">Entre versos</option><option value="2">Un cielo para Eve</option></select></div>
+        <button id="music-play" class="gift-button" aria-pressed="false">▶ Escuchar</button>
+        <label for="music-volume">Volumen <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.35"></label>
+    </section>
+    <section id="biblioteca" class="library" aria-labelledby="library-title">
+        <span class="eyebrow">Un regalo que no termina en esta página</span>
+        <h2 id="library-title">Mil formas de<br><em style="color:#e8c578">quedarte en un verso.</em></h2>
+        <p class="library-intro">Eve, este rinconcito es para tu alma de poeta. Descubre libros en español, guarda los que te abracen y vuelve a ellos cuando necesites un poco de belleza.</p>
+        <form id="book-form" class="library-tools" role="search"><label for="book-search" class="sr-only">Buscar por título o autor</label><input id="book-search" type="search" placeholder="Un autor, un título, un nuevo comienzo…"><button class="gift-button" type="submit">Buscar más</button><button id="favorites-toggle" class="gift-button" type="button" aria-pressed="false">Mis favoritos ♡</button></form>
+        <p id="library-status" class="library-status" role="status" aria-live="polite"></p>
+        <div id="book-grid" class="book-grid"></div>
+        <div class="library-footer"><span>Lecturas de <a href="https://www.gutenberg.org/" target="_blank" rel="noopener noreferrer">Project Gutenberg</a> y <a href="https://es.wikisource.org/" target="_blank" rel="noopener noreferrer">Wikisource</a>. Tus favoritos se guardan en este navegador.</span><button id="surprise-book" class="gift-button">Elige uno para mí ✧</button></div>
+    </section>
+
     <!-- Botones Flotantes (reemplazan al menú superior) -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
         <button id="sound-toggle" onclick="toggleAudio()" class="w-12 h-12 rounded-full bg-stone-900/80 backdrop-blur text-amber-400 border border-amber-400/30 flex items-center justify-center shadow-lg hover:scale-110 transition-all group relative">
@@ -367,7 +387,7 @@
     </footer>
 
     <script>
-        lucide.createIcons();
+        if (window.lucide) window.lucide.createIcons();
 
         // Canvas Setup for Floating Yellow Petals & Light Dust
         const canvas = document.getElementById('canvas-container');
@@ -462,7 +482,8 @@
                 }
             }
 
-            requestAnimationFrame(animateCanvas);
+            if (particles.length > 220) particles.splice(0, particles.length - 220);
+            if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(animateCanvas);
         }
 
         animateCanvas();
@@ -488,7 +509,7 @@
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
                 gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.04);
+                gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, 0.18 * Number(document.getElementById('music-volume').value)), audioCtx.currentTime + 0.04);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.3);
 
                 osc.connect(gain);
@@ -501,26 +522,13 @@
             }
         }
 
-        function toggleAudio() {
-            audioEnabled = !audioEnabled;
-            const tooltip = document.getElementById('sound-tooltip');
-            if (tooltip) tooltip.innerText = audioEnabled ? 'Música: On' : 'Música: Off';
-            
-            const btn = document.getElementById('sound-toggle');
-            if(btn) {
-                if(audioEnabled) {
-                    btn.classList.remove('bg-stone-900/40', 'text-amber-400/50');
-                    btn.classList.add('bg-stone-900/80', 'text-amber-400');
-                } else {
-                    btn.classList.add('bg-stone-900/40', 'text-amber-400/50');
-                    btn.classList.remove('bg-stone-900/80', 'text-amber-400');
-                }
-            }
-        }
+        function toggleAudio() { toggleMusic(); }
 
         function openGiftEnvelope() {
             const modal = document.getElementById('envelope-modal');
             modal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => { modal.hidden = true; modal.style.display = 'none'; }, 700);
+            toggleMusic();
             
             // Play welcoming chord
             playHarmonicTone(329.63);
@@ -612,5 +620,6 @@
             }
         });
     </script>
+    <script src="assets/gift.js"></script>
 </body>
 </html>
