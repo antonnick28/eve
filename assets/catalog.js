@@ -44,14 +44,16 @@ function renderCatalog(){
 }
 function renderContinue(){const book=poetryCatalog.find(b=>b.id===lastBook);const el=$('continue-reading');el.replaceChildren();el.hidden=!book||activeShelf==='favoritos';if(book){const text=document.createElement('span');text.textContent='Tu última lectura';el.append(text,readingLink(book,`${book.title} →`));}}
 function route(){
- const name=location.hash.slice(1)||'inicio';const catalog=['biblioteca','favoritos'].includes(name);activeShelf=name==='favoritos'?'favoritos':'biblioteca';
- $('gift-home').hidden=catalog||name==='musica';$('biblioteca').hidden=!catalog;$('musica').hidden=name!=='musica';
+ const name=location.hash.slice(1)||'inicio';
+ if(name==='biblioteca'||name==='favoritos'){location.replace(name==='biblioteca'?'biblioteca.html':'favoritos.html');return;}
+ const catalog=false;activeShelf='biblioteca';
+ $('gift-home').hidden=catalog||name==='musica'||name==='pildoras';$('biblioteca').hidden=!catalog;$('musica').hidden=name!=='musica';$('pildoras').hidden=name!=='pildoras';
  document.body.classList.toggle('catalog-mode',catalog);document.body.classList.toggle('music-mode',name==='musica');
- document.querySelectorAll('[data-route]').forEach(a=>{const selected=a.dataset.route===(catalog?activeShelf:name==='musica'?'musica':'inicio');if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ document.querySelectorAll('[data-route]').forEach(a=>{const selected=a.dataset.route===(catalog?activeShelf:['musica','pildoras'].includes(name)?name:'inicio');if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  $('catalog-feature').hidden=activeShelf==='favoritos';$('continue-reading').hidden=activeShelf==='favoritos'||!lastBook;
  renderCatalog();document.title=catalog?`${activeShelf==='favoritos'?'Mis favoritos':'Biblioteca de poesía'} · Para Eve`:'Para Eve · Un jardín de versos';
- if(catalog||name==='musica'){const modal=$('envelope-modal');modal.hidden=true;modal.style.display='none';}
- if(['inicio','biblioteca','favoritos','musica'].includes(name))window.scrollTo({top:0,behavior:'instant'});
+ if(catalog||name==='musica'||name==='pildoras'){const modal=$('envelope-modal');modal.hidden=true;modal.style.display='none';}
+ if(['inicio','biblioteca','favoritos','musica','pildoras'].includes(name))window.scrollTo({top:0,behavior:'instant'});
 }
 window.addEventListener('hashchange',route);
 for(const author of [...new Set(poetryCatalog.map(b=>b.author))].sort()){const option=document.createElement('option');option.value=author;option.textContent=author;$('author-filter').append(option);}
@@ -67,5 +69,5 @@ async function shareGift(){
  if(local){toast('Esta es una vista local. Para compartirla con Eve, primero hay que publicar la página en internet.');return;}
  try{if(navigator.share){await navigator.share({title:'Para Eve · Un jardín de versos',text:'Un rincón de flores y poesía para ti 🌻',url:url.href});}else if(navigator.clipboard){await navigator.clipboard.writeText(url.href);toast('Enlace copiado. Ya puedes compartir este jardín.');}else{$('share-url').hidden=false;$('share-url').value=url.href;$('share-url').select();toast('Copia este enlace para compartirlo.');}}catch(e){if(e.name!=='AbortError')toast('No se pudo compartir. Copia la dirección desde tu navegador.');}
 }
-$('share-gift').onclick=shareGift;
+if($('share-gift'))$('share-gift').onclick=shareGift;
 renderContinue();route();

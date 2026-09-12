@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#17261f"><title>Música para Eve</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/catalog.css"><link rel="stylesheet" href="assets/pages.css">
+</head>
+<body class="music-page catalog-mode">
+  <nav class="site-bar"><a class="site-brand" href="index.html"><span aria-hidden="true">✿</span><span>Para Eve<small>UN JARDÍN DE VERSOS</small></span></a><div class="site-nav" aria-label="Navegación principal"><a href="index.html"><span aria-hidden="true">⌂</span>Inicio</a><a href="biblioteca.html"><span aria-hidden="true">▤</span>Biblioteca</a><a href="favoritos.html"><span aria-hidden="true">♡</span>Favoritos</a><a href="musica.html" aria-current="page"><span aria-hidden="true">♪</span>Música</a><a href="pildoras.html"><span aria-hidden="true">◌</span>Píldoras</a></div></nav>
+  <main class="album-layout">
+    <header class="album-intro"><span class="page-eyebrow">LA BANDA SONORA DE SUS DÍAS</span><h1>Canciones que<br><em>guardan algo.</em></h1><p>Una colección personal para los momentos que quieras acompañar con música.</p></header>
+    <section class="record-player" aria-label="Reproductor musical">
+      <div class="album-cover"><span id="album-symbol">✦</span><small>PARA EVE</small></div>
+      <div class="player-details"><span class="page-eyebrow">SONANDO AHORA</span><h2 id="track-title">Tu primera canción</h2><p id="track-artist">Agrégala en tu catálogo</p>
+        <div class="seek"><time id="current-time">0:00</time><input id="progress" type="range" min="0" max="100" value="0" aria-label="Progreso"><time id="duration">0:00</time></div>
+        <div class="transport"><button id="previous" aria-label="Anterior">↶</button><button id="play" class="play-button" aria-label="Reproducir">▶</button><button id="next" aria-label="Siguiente">↷</button><label>Volumen <input id="volume" type="range" min="0" max="1" step="0.05" value="0.7"></label></div><button id="save-song" class="save-current" type="button">♡ Guardar en favoritos</button>
+      </div>
+    </section>
+    <section class="track-catalog" aria-labelledby="catalog-title"><div class="section-label"><div><span class="page-eyebrow">TU ARCHIVO SONORO</span><h2 id="catalog-title">La colección</h2></div><p id="catalog-count">Lista para recibir tus canciones</p></div><div id="tracks" class="tracks"></div><div id="no-tracks" class="no-tracks"><b>♫</b><h3>Aquí comienza su playlist</h3><p>Sube tus archivos MP3 a <code>assets/music/</code> y añade sus datos en <code>assets/music-player.js</code>. Cuando publiques los cambios, GitHub Pages los reproducirá directamente.</p></div></section>
+  </main>
+  <footer>Hecho con canciones que significan algo · <a href="pildoras.html">Abrir una píldora de calma →</a></footer>
+  <script src="assets/music-player.js"></script>
+</body>
+</html>

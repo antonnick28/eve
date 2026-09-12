@@ -112,31 +112,30 @@
 <body class="min-h-screen relative selection:bg-yellow-400 selection:text-black">
 
 
-    <div class="site-bar"><a class="site-brand" href="#inicio"><span aria-hidden="true">✿</span><span>Para Eve<small>UN JARDÍN DE VERSOS</small></span></a><nav class="site-nav" aria-label="Navegación principal"><a href="#inicio" data-route="inicio"><span aria-hidden="true">⌂</span>Inicio</a><a href="#biblioteca" data-route="biblioteca"><span aria-hidden="true">▤</span>Biblioteca</a><a href="#favoritos" data-route="favoritos"><span aria-hidden="true">♡</span>Favoritos <b id="favorite-count">0</b></a><a href="#musica" data-route="musica"><span aria-hidden="true">♪</span>Música</a></nav><button id="share-gift" class="share-gift" aria-label="Compartir este jardín">Compartir ↗</button></div>
+    <div class="site-bar"><a class="site-brand" href="index.html"><span aria-hidden="true">✿</span><span>Para Eve<small>UN JARDÍN DE VERSOS</small></span></a><nav class="site-nav" aria-label="Navegación principal"><a href="#inicio" data-route="inicio"><span aria-hidden="true">⌂</span>Inicio</a><a href="biblioteca.html"><span aria-hidden="true">▤</span>Biblioteca</a><a href="favoritos.html"><span aria-hidden="true">♡</span>Favoritos</a><a href="musica.html"><span aria-hidden="true">♪</span>Música</a><a href="pildoras.html"><span aria-hidden="true">◌</span>Píldoras</a></nav></div>
     <div id="catalog-toast" class="catalog-toast" role="status" aria-live="polite"></div><input id="share-url" class="share-url" aria-label="Enlace para compartir" readonly hidden>
 
     <!-- Interactive Canvas for Floating Yellow Petals & Light Dust -->
     <canvas id="canvas-container"></canvas>
 
-    <div id="envelope-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl transition-opacity duration-700">
-        <div class="max-w-md w-full glass-card rounded-3xl p-8 text-center relative border border-yellow-400/40 envelope-shadow transform transition-all duration-500 scale-100">
-            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-tr from-yellow-500 via-amber-400 to-yellow-200 p-1 flex items-center justify-center animate-pulse-slow">
-                <div class="w-full h-full rounded-full bg-stone-950 flex items-center justify-center">
-                    <i data-lucide="smile" class="w-9 h-9 text-yellow-400"></i>
-                </div>
-            </div>
-
-            <span class="text-xs uppercase tracking-widest text-amber-300 font-medium block mb-1">Un detalle de luz y de alguien que te quiere</span>
-            <h2 class="text-4xl font-serif font-bold text-white mb-2">Para <span class="gold-gradient-text">Eve</span></h2>
-            <p class="text-amber-200/80 font-serif italic text-base mb-8">
-                "Para la futura psicóloga que escucha con el alma, la poeta de mente brillante (bendito Géminis), y una chica única que con su sola sonrisa llena de sol mi mundo."
-            </p>
-
-            <button onclick="openGiftEnvelope()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-slate-950 font-bold text-base tracking-wide shadow-xl shadow-yellow-500/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 group">
-                <i data-lucide="flower-2" class="w-5 h-5 group-hover:rotate-45 transition-transform duration-500"></i>
-                <span>Abrir tus Flores Amarillas</span>
+    <div id="envelope-modal" class="letter-intro" role="dialog" aria-modal="true" aria-labelledby="letter-title">
+        <div class="letter-scene">
+            <p class="letter-from">un pequeño rincón hecho para ti</p>
+            <button class="envelope" type="button" onclick="openGiftEnvelope()" aria-label="Abrir la carta para Eve">
+                <span class="envelope-flap"></span><span class="envelope-heart">♡</span>
+                <span class="envelope-name">Para Eve</span>
             </button>
+            <p class="letter-hint">toca la carta para abrirla</p>
         </div>
+        <article id="letter-message" class="letter-message" hidden>
+            <span class="letter-sun">☀</span>
+            <p class="letter-kicker">PARA TI, CON MUCHO CARIÑO</p>
+            <h2 id="letter-title">Querida Eve,</h2>
+            <p>Ojalá esta carta te recuerde, incluso en los días más normales, que eres una persona preciosa: sensible, brillante y capaz de hacer que todo se sienta un poquito más bonito.</p>
+            <p>Gracias por ser tú. Que nunca te falten calma, flores amarillas y motivos para sonreír.</p>
+            <p class="letter-signature">Con cariño, siempre.</p>
+            <button class="letter-enter" type="button" onclick="closeLetter()">Guardar esta carta <span>→</span></button>
+        </article>
     </div>
 
     <main id="gift-home">
@@ -168,7 +167,7 @@
             </div>
         </div>
 
-        <nav class="gift-nav" aria-label="Explora tu regalo"><a href="#poema">Tu poema</a><a href="#biblioteca">Tu biblioteca</a><a href="#musica">Música para leer</a></nav>
+        <nav class="gift-nav" aria-label="Explora tu regalo"><a href="#poema">Tu poema</a><a href="biblioteca.html">Tu biblioteca</a><a href="musica.html">Música para leer</a><a href="pildoras.html">Píldoras de calma</a></nav>
         <div class="mt-20 animate-bounce">
             <a href="#poema" class="text-amber-400/70 hover:text-amber-300 transition-colors flex flex-col items-center gap-1 text-xs tracking-widest uppercase">
                 <span>Desliza para leer tu poema</span>
@@ -365,12 +364,28 @@
 
 
     </main>
-    <section id="musica" class="music-panel" aria-label="Música para leer">
-        <div class="music-copy"><span class="eyebrow">La banda sonora de tu rincón</span><h2>Un poquito de calma ♪</h2><p id="music-status" role="status"></p>
-        <label for="music-track" class="eyebrow">Melodía </label><select id="music-track"><option value="0">Luz de girasol</option><option value="1">Entre versos</option><option value="2">Un cielo para Eve</option></select></div>
-        <button id="music-play" class="gift-button" aria-pressed="false">▶ Escuchar</button>
-        <label for="music-volume">Volumen <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.35"></label>
+    <main id="musica" class="music-catalog" hidden>
+        <header class="music-hero"><span>LA BANDA SONORA DE ESTE RINCÓN</span><h1>Una canción<br><em>para cada momento.</em></h1><p>Un catálogo hecho por ti para acompañarla. Elige una canción y deja que el resto vaya más despacio.</p></header>
+        <section class="now-playing" aria-label="Reproductor de música">
+            <div id="music-art" class="music-art" aria-hidden="true"><span>♪</span></div>
+            <div class="player-copy"><span class="playing-label">SONANDO AHORA</span><h2 id="current-track-title">Tu música pronto vivirá aquí</h2><p id="current-track-artist">Agrega tus canciones favoritas</p>
+                <div class="player-timeline"><span id="music-current-time">0:00</span><input id="music-progress" type="range" min="0" max="100" value="0" aria-label="Progreso de la canción"><span id="music-duration">0:00</span></div>
+                <div class="player-actions"><button id="music-prev" type="button" aria-label="Canción anterior">↶</button><button id="music-play" type="button" class="big-play" aria-label="Reproducir">▶</button><button id="music-next" type="button" aria-label="Siguiente canción">↷</button><label class="volume-control" aria-label="Volumen">⌁ <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.7"></label></div>
+            </div>
+        </section>
+        <section class="music-library" aria-labelledby="music-library-title"><div class="music-library-heading"><div><span>HECHO PARA ELLA</span><h2 id="music-library-title">Tu colección</h2></div><p id="music-status" role="status">Aún no hay canciones. Agrega tus archivos para comenzar.</p></div><div id="music-list" class="music-list"></div><div id="music-empty" class="music-empty"><span>♫</span><h3>Aquí sonarán sus canciones</h3><p>Crea la carpeta <code>assets/music</code>, sube allí tus MP3 y agrega cada canción en <code>assets/gift.js</code>.</p></div></section>
+    </main>
+
+    <section id="pildoras" class="validation-section" aria-labelledby="pills-title">
+        <div class="validation-heading"><span>UN BOTIQUÍN PARA EL ALMA</span><h2 id="pills-title">Píldoras de calma</h2><p>Ábrelas cuando necesites recordar algo bonito sobre ti.</p></div>
+        <div class="pill-grid">
+            <button class="validation-pill" type="button" data-message="No tienes que ser perfecta para merecer descanso, amor y cosas bonitas. Ya eres suficiente tal como eres."><span>♡</span><strong>Para los días difíciles</strong><small>abre una dosis de calma</small></button>
+            <button class="validation-pill" type="button" data-message="Tu sensibilidad no es demasiado: es una de las formas más lindas que tienes de mirar y cuidar el mundo."><span>✦</span><strong>Para cuando dudes de ti</strong><small>abre una dosis de certeza</small></button>
+            <button class="validation-pill" type="button" data-message="Todo lo que estás aprendiendo y construyendo cuenta. Ve a tu ritmo: tu camino no necesita parecerse al de nadie."><span>☀</span><strong>Para seguir creciendo</strong><small>abre una dosis de fuerza</small></button>
+            <button class="validation-pill" type="button" data-message="Está bien pausar. No necesitas tener todas las respuestas hoy; respirar y volver a ti también es avanzar."><span>☾</span><strong>Para respirar</strong><small>abre una dosis de paz</small></button>
+        </div>
     </section>
+    <div id="pill-modal" class="pill-modal" hidden role="dialog" aria-modal="true" aria-labelledby="pill-modal-title"><div><button id="pill-close" type="button" aria-label="Cerrar">×</button><span>♡</span><p id="pill-modal-title">Una píldora para ti</p><blockquote id="pill-message"></blockquote><small>Guarda este recordatorio cerca de tu corazón.</small></div></div>
     <main id="biblioteca" class="catalog-page" hidden>
       <div class="catalog-heading"><div><span class="catalog-kicker">UNA BIBLIOTECA QUE FLORECE CONTIGO</span><h1>Entre flores <em>y versos.</em></h1><p>Un libro, un ratito para ti y todo un mundo por sentir.</p></div><button id="surprise-book" class="catalog-secondary">Sorpréndeme ✧</button></div>
       <section id="catalog-feature" class="catalog-feature" aria-labelledby="feature-title"><div class="feature-copy"><span class="feature-label">LA LECTURA QUE TE ESPERA</span><h2 id="feature-title">Hay paisajes que<br>se llevan <em>dentro.</em></h2><p>En las orillas del Sar · Rosalía de Castro</p><p class="feature-note">Naturaleza, memoria y emoción. Abre sus páginas y deja que el mundo vaya un poquito más despacio.</p><a id="featured-read" class="catalog-primary" target="_blank" rel="noopener noreferrer">Empezar a leer ↗</a><span class="feature-caption">Texto completo · En español · Lectura gratuita</span></div><img src="assets/covers/70984.svg" alt="En las orillas del Sar, de Rosalía de Castro" width="400" height="560" class="featured-cover"></section>
