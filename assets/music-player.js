@@ -1,20 +1,20 @@
 /* Sube MP3 a assets/music/ y agrega cada canción aquí. GitHub Pages sirve estos archivos sin configuración extra. */
 const songs = [
   { title: 'No sé si me recuerdas', artist: 'Una canción para Eve', src: 'assets/music/No se si me recuerdas.mpeg', icon: '✦', tone: '#c99a4e' },
+  { title: 'Un poquito más', artist: 'Una canción para Eve', src: 'assets/music/Un poquito más.mp3', icon: '⋆', tone: '#887ba2' },
+  { title: 'Sal y respira', artist: 'Una canción para Eve', src: 'assets/music/Sal y Respira.mp3', icon: '☁', tone: '#79a0a4' },
+  { title: 'Lo estoy intentando', artist: 'Una canción para Eve', src: 'assets/music/Lo Estoy Intentando.mp3', icon: '✦', tone: '#a18266' },
+  { title: 'Cómo te sientes', artist: 'Una canción para Eve', src: 'assets/music/Como te Sientes.mp3', icon: '♡', tone: '#af7d70' },
+  { title: 'Mi consejo', artist: 'Una canción para Eve', src: 'assets/music/Mi consejo.mp3', icon: '♡', tone: '#b27878' },
   { title: '1 Minuto', artist: 'Una canción para Eve', src: 'assets/music/1 Minuto.mp3', icon: '☀', tone: '#b88947' },
+  { title: 'Si tú la quieres', artist: 'Una canción para Eve', src: 'assets/music/Si tú la quieres.mp3', icon: '♥', tone: '#b36f65' },
   { title: 'Aunque no te pueda ver', artist: 'Una canción para Eve', src: 'assets/music/Aunque no te pueda ver.mp3', icon: '☾', tone: '#768b72' },
   { title: 'Buenas Noches', artist: 'Una canción para Eve', src: 'assets/music/Buenas Noches.mp3', icon: '✦', tone: '#8f7aa6' },
   { title: 'Buenos días', artist: 'Una canción para Eve', src: 'assets/music/Buenos días.mp3', icon: '☀', tone: '#c99a4e' },
-  { title: 'Cómo te sientes', artist: 'Una canción para Eve', src: 'assets/music/Como te Sientes.mp3', icon: '♡', tone: '#af7d70' },
   { title: 'Fría como el viento', artist: 'Una canción para Eve', src: 'assets/music/Fria como el viento.mp3', icon: '⌁', tone: '#668a91' },
   { title: 'Gabi Rolón', artist: 'Una canción para Eve', src: 'assets/music/Gabi Rolon.mp3', icon: '✿', tone: '#809d70' },
-  { title: 'Lo estoy intentando', artist: 'Una canción para Eve', src: 'assets/music/Lo Estoy Intentando.mp3', icon: '✦', tone: '#a18266' },
-  { title: 'Mi consejo', artist: 'Una canción para Eve', src: 'assets/music/Mi consejo.mp3', icon: '♡', tone: '#b27878' },
-  { title: 'Sal y respira', artist: 'Una canción para Eve', src: 'assets/music/Sal y Respira.mp3', icon: '☁', tone: '#79a0a4' },
-  { title: 'Si tú la quieres', artist: 'Una canción para Eve', src: 'assets/music/Si tú la quieres.mp3', icon: '♥', tone: '#b36f65' },
   { title: 'Te quiero', artist: 'Una canción para Eve', src: 'assets/music/Te Quiero.mp3', icon: '♥', tone: '#bb7b65' },
   { title: 'Te vi pasar', artist: 'Una canción para Eve', src: 'assets/music/Te Vi Pasar.mp3', icon: '✧', tone: '#a58446' },
-  { title: 'Un poquito más', artist: 'Una canción para Eve', src: 'assets/music/Un poquito más.mp3', icon: '⋆', tone: '#887ba2' },
   // { title: 'Nombre de la canción', artist: 'Artista o dedicatoria', src: 'assets/music/cancion.mp3', icon: '✦', tone: '#c99a4e' },
 ];
 const audio = new Audio(); let selected = 0;
